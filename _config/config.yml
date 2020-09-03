@@ -9,11 +9,11 @@ SilverStripe\SiteConfig\SiteConfig:
 
 Page:
   extensions:
-    - Sunnysideup\SunnysideupThemeBackend\PageExtension
+    - Sunnysideup\SunnysideupThemeBackend\Extensions\PageExtension
 
 PageController:
   extensions:
-    - Sunnysideup\SunnysideupThemeBackend\PageControllerExtension
+    - Sunnysideup\SunnysideupThemeBackend\Extensions\PageControllerExtension
 
 ---
 Name: sunnysideup-theme-backend-cache
