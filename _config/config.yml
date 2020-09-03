@@ -1,0 +1,9 @@
+---
+Name: sunnysideup-theme-backend
+---
+
+SilverStripe\Core\Injector\Injector:
+  Psr\SimpleCache\CacheInterface.randomImageCache:
+    factory: SilverStripe\Core\Cache\CacheFactory
+    constructor:
+      namespace: "randomImageCache"
