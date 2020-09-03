@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnysideup\SunnysideupThemeBackend\Config;
+namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
 use Page;
 use SilverStripe\CMS\Model\SiteTree;
