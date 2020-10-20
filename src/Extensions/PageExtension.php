@@ -2,6 +2,7 @@
 
 namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\TextField;
