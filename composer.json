@@ -17,7 +17,8 @@
         "sunnysideup/metatags": "dev-master",
         "sunnysideup/webpack_requirements_backend": "dev-master",
         "sunnysideup/simple-template-caching": "dev-master",
-        "sunnysideup/sunnysideup-theme": "dev-master"
+        "sunnysideup/sunnysideup-theme": "dev-master",
+        "sunnysideup/phone_field": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
