@@ -10,8 +10,23 @@
       "Theme"
     ],
     "require": {
-      "silverstripe/framework": "^4.0",
-      "sminnee/silverstripe-verbosefields": "dev-master"
+        "php": ">=7.3",
+        "silverstripe/recipe-cms": "^4.6@stable",
+        "silverstripe/userforms": "^5.5",
+        "sunnysideup/googleanalyticsbasics": "dev-master",
+        "sunnysideup/metatags": "dev-master",
+        "sunnysideup/webpack_requirements_backend": "dev-master",
+        "sunnysideup/simple-template-caching": "dev-master",
+        "sunnysideup/sunnysideup-theme": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require-dev": {
+        "sunnysideup/templateoverview": "dev-master",
+        "sunnysideup/prettyphoto": "dev-master",
+        "sunnysideup/typography": "dev-master",
+        "sunnysideup/sswebpack_engine_only": "dev-master",
+        "sunnysideup/config_manager": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
