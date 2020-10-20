@@ -8,7 +8,7 @@ use SilverStripe\Control\Director;
 use SilverStripe\UserForms\Model\UserDefinedForm;
 use SilverStripe\Core\Extension;
 
-class PageControllerExtension extends ContentController
+class PageControllerExtension extends Extension
 {
 
 
