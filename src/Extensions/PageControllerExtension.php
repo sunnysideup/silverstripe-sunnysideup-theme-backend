@@ -15,7 +15,6 @@ use SilverStripe\Core\Injector\Injector;
 class PageControllerExtension extends Extension
 {
 
-    private static $image_dir = 'vendor/sunnysideup/sunnysideup-theme-backend/images';
 
 
     public function IsHomePage()
@@ -37,14 +36,16 @@ class PageControllerExtension extends Extension
         return $this->owner->Children()->filter('ShowInMenus', 1);
     }
 
-    private static $_random_image = null;
 
-    private static $_random_images = null;
 
     public function RandomImage() : string
     {
-        if (! self::$_random_image) {
-            $array = $this->getRandomImagesAssignedToPages();
+        $imageName = '';
+        $array = $this->getRandomImagesAssignedToPages();
+        if($this->owner->RandomImage && in_array($this->owner->RandomImage, $array, true)) {
+            $imageName = $this->owner->RandomImage;
+        }
+        else {
             if (isset($_GET['testimg'])) {
                 $pos = intval($_GET['testimg']);
             } else {
@@ -53,12 +54,12 @@ class PageControllerExtension extends Extension
             if(! isset($array[$pos])) {
                 $pos = array_rand($array);
             }
-            self::$_random_image = Controller::join_links($this->getRandomImagesFrontEndLocation() , $array[$pos]);
+            $imageName = $array[$pos];
         }
-        return self::$_random_image;
+        return Controller::join_links($this->getRandomImagesFrontEndFolder() , $imageName);
     }
 
-    public function getRandomImagesAssignedToPages()
+    public function getRandomImagesAssignedToPages() : array
     {
         if (self::$_random_images === null) {
             $files = $this->owner->getRequest()->getSession()->get('randomImages');
@@ -68,13 +69,7 @@ class PageControllerExtension extends Extension
             if (is_array($files) && count($files)) {
                 //do nothing
             } else {
-                $files = scandir( $this->getRandomImagesFolder()) ?? [];
-                foreach ($files as $key => $file) {
-                    $ext = pathinfo($file, PATHINFO_EXTENSION);
-                    if ($ext !== 'jpg') {
-                        unset($files[$key]);
-                    }
-                }
+                $files = $this->getRandomImages();
                 shuffle($files);
                 $files = $this->addSiteTreeIdsToFiles($files);
                 $this->owner->getRequest()->getSession()->set('randomImages', serialize($files));
@@ -103,15 +98,6 @@ class PageControllerExtension extends Extension
         return $newArray;
     }
 
-    public function getRandomImagesFolder()
-    {
-        return Controller::join_links( Director::baseFolder() ,  Config::inst()->get(self::class, 'image_dir'));
-    }
-
-    public function getRandomImagesFrontEndLocation()
-    {
-        return Injector::inst()->get(ResourceURLGenerator::class)->urlForResource(Config::inst()->get(self::class, 'image_dir'));
-    }
 
     public function canCachePage(): bool
     {

@@ -56,7 +56,7 @@ class SiteConfigExtras extends DataExtension
         $siteConfig = SiteConfig::current_site_config();
 
         if (! $siteConfig->CopyrightNotice) {
-            $siteConfig->CopyrightNotice = '&copy; ' . date('Y') . 'Sunny Side Up Ltd.';
+            $siteConfig->CopyrightNotice =  date('Y') . ' ' . $siteConfig->Title;
             $update[] = 'created default entry for CopyrightNotice';
         }
         if (count($update)) {
