@@ -15,7 +15,7 @@ use SilverStripe\Core\Injector\Injector;
 class PageControllerExtension extends Extension
 {
 
-
+    protected static $_random_images_assigned_to_pages = null;
 
     public function IsHomePage()
     {
@@ -41,11 +41,11 @@ class PageControllerExtension extends Extension
     public function RandomImage() : string
     {
         $imageName = '';
-        $array = $this->getRandomImagesAssignedToPages();
-        if($this->owner->RandomImage && in_array($this->owner->RandomImage, $array, true)) {
+        if($this->owner->RandomImage && in_array($this->owner->RandomImage, $this->owner->getRandomImages(), true)) {
             $imageName = $this->owner->RandomImage;
         }
         else {
+            $array = $this->owner->getRandomImagesAssignedToPages();
             if (isset($_GET['testimg'])) {
                 $pos = intval($_GET['testimg']);
             } else {
@@ -56,12 +56,12 @@ class PageControllerExtension extends Extension
             }
             $imageName = $array[$pos];
         }
-        return Controller::join_links($this->getRandomImagesFrontEndFolder() , $imageName);
+        return Controller::join_links($this->owner->getRandomImagesFrontEndFolder() , $imageName);
     }
 
     public function getRandomImagesAssignedToPages() : array
     {
-        if (self::$_random_images === null) {
+        if (self::$_random_images_assigned_to_pages === null) {
             $files = $this->owner->getRequest()->getSession()->get('randomImages');
             if ($files) {
                 $files = unserialize($files);
@@ -69,17 +69,39 @@ class PageControllerExtension extends Extension
             if (is_array($files) && count($files)) {
                 //do nothing
             } else {
-                $files = $this->getRandomImages();
+                $files = $this->owner->getRandomImages();
                 shuffle($files);
-                $files = $this->addSiteTreeIdsToFiles($files);
+                $files = $this->owner->addSiteTreeIdsToFiles($files);
                 $this->owner->getRequest()->getSession()->set('randomImages', serialize($files));
             }
-            self::$_random_images = $files;
+            self::$_random_images_assigned_to_pages = $files;
         }
-        return self::$_random_images;
+        return self::$_random_images_assigned_to_pages;
     }
 
-    protected function addSiteTreeIdsToFiles(array $files) : array
+
+    public function canCachePage(): bool
+    {
+        if ($this->owner->dataRecord instanceof UserDefinedForm) {
+            return false;
+        }
+        return true;
+    }
+
+    public function onAfterInit()
+    {
+        if (! empty($_POST['Website'])) {
+            die('Sorry, but this looks like spam. Please go back the previous page and try again.');
+        }
+        if($this->owner->getRequest()->getVar('flush')) {
+            $this->owner->getRequest()->getSession()->clear('randomImages');
+        }
+        $this->owner->addBasicMetatagRequirements();
+        $this->owner->InsertGoogleAnalyticsAsHeadTag();
+    }
+
+
+    public function addSiteTreeIdsToFiles(array $files) : array
     {
         $newArray = [];
         if(count($files)) {
@@ -98,22 +120,4 @@ class PageControllerExtension extends Extension
         return $newArray;
     }
 
-
-    public function canCachePage(): bool
-    {
-        if ($this->owner->dataRecord instanceof UserDefinedForm) {
-            return false;
-        }
-        return true;
-    }
-
-    protected function init()
-    {
-        parent::init();
-        if (! empty($_POST['Website'])) {
-            die('Sorry, but this looks like spam. Please go back the previous page and try again.');
-        }
-        $this->addBasicMetatagRequirements();
-        $this->InsertGoogleAnalyticsAsHeadTag();
-    }
 }

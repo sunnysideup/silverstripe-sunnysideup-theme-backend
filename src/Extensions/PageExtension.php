@@ -12,11 +12,20 @@ use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Core\Manifest\ResourceURLGenerator;
 use SilverStripe\Core\Config\Config;
+use SilverStripe\Core\Flushable;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\Controller;
+use Sminnee\VerboseFields\VerboseOptionsetField;
 
-class PageExtension extends SiteTreeExtension
+
+class PageExtension extends SiteTreeExtension implements Flushable
 {
+
+    public static function flush()
+    {
+        $cache = Injector::inst()->get(CacheInterface::class . '.randomImageCache');
+        $cache->clear();
+    }
 
     private static $image_dir = 'vendor/sunnysideup/sunnysideup-theme-backend/images';
 
@@ -57,10 +66,10 @@ class PageExtension extends SiteTreeExtension
         $list = $this->getRandomImages();
         $source = array_combine($list, $list);
         foreach($list as $image) {
-            $descriptions[$image] = '<img src="'.$this->getRandomImagesFrontEndFolder() .'/' . $image.'" />';
+            $descriptions[$image] = '<img src="'.$this->getRandomImagesFrontEndFolder() .'/' . $image.'" style="max-width: 300px; max-height: 300px" />';
         }
 
-        return (new VerboseOptionsetField('RandomImage', 'Random Image (optional)'))
+        return (new VerboseOptionsetField ('RandomImage', 'Random Image (optional)'))
             ->setSource($source)
             ->setSourceDescriptions($descriptions);
     }
