@@ -21,7 +21,6 @@ use SilverStripe\SiteConfig\SiteConfig;
 class SiteConfigExtras extends DataExtension
 {
     private static $db = [
-        'ClimatePositivePage' => 'Varchar',
         'CopyrightNotice' => 'Varchar',
         'PhoneNumber' => 'PhoneField',
         'Email' => 'EmailAddress',
@@ -29,6 +28,7 @@ class SiteConfigExtras extends DataExtension
 
     private static $has_one = [
         'ClimatePositivePage' => Page::class,
+        'ShopifyPartnerPage' => Page::class,
     ];
 
     public function updateCMSFields(FieldList $fields)
@@ -40,6 +40,7 @@ class SiteConfigExtras extends DataExtension
                 TextField::create('PhoneNumber', 'Phone Number'),
                 EmailField::create('Email', 'Email'),
                 TreeDropdownField::create('ClimatePositivePageID', 'Climate Positive Page', SiteTree::class),
+                TreeDropdownField::create('ShopifyPartnerPageID', 'Climate Positive Page', SiteTree::class),
             ]
         );
         return $fields;
