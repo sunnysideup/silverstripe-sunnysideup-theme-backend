@@ -40,7 +40,7 @@ class SiteConfigExtras extends DataExtension
                 TextField::create('PhoneNumber', 'Phone Number'),
                 EmailField::create('Email', 'Email'),
                 TreeDropdownField::create('ClimatePositivePageID', 'Climate Positive Page', SiteTree::class),
-                TreeDropdownField::create('ShopifyPartnerPageID', 'Climate Positive Page', SiteTree::class),
+                TreeDropdownField::create('ShopifyPartnerPageID', 'Shopify Partner Page', SiteTree::class),
             ]
         );
         return $fields;
