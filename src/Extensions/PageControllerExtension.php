@@ -51,12 +51,18 @@ class PageControllerExtension extends Extension
             } else {
                 $pos = $this->owner->ID;
             }
-            if(! isset($array[$pos])) {
+            if(! isset($array[$pos]) && !empty($array)) {
                 $pos = array_rand($array);
             }
-            $imageName = $array[$pos];
+            if( isset($array[$pos])) {
+                $imageName = $array[$pos];
+            }
         }
-        return Controller::join_links($this->owner->getRandomImagesFrontEndFolder() , $imageName);
+        if($imageName) {
+            return Controller::join_links($this->owner->getRandomImagesFrontEndFolder() , $imageName);
+        } else {
+            return '';
+        }
     }
 
     public function getRandomImagesAssignedToPages() : array
@@ -120,4 +126,19 @@ class PageControllerExtension extends Extension
         return $newArray;
     }
 
+    public function getRandomImages() :array
+    {
+        if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImages')) {
+            return $this->owner->dataRecord->getRandomImages();
+        }
+        return [];
+    }
+
+    public function getRandomImagesFrontEndFolder() :string
+    {
+        if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImagesFrontEndFolder')) {
+            return $this->owner->dataRecord->getRandomImagesFrontEndFolder();
+        }
+        return '';
+    }
 }
