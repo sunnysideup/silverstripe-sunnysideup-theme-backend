@@ -4,6 +4,7 @@ namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\CheckboxField;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\TextField;
 use SilverStripe\CMS\Model\SiteTreeExtension;
@@ -35,15 +36,19 @@ class PageExtension extends SiteTreeExtension implements Flushable
         'Quote' => 'Varchar',
         'VimeoVideoID' => 'Int',
         'RandomImage' => 'Varchar(255)',
+        'TypeModeForQuote' => 'Boolean',
     ];
 
     public function updateCMSFields(FieldList $fields)
     {
         $owner = $this->owner;
 
-        $fields->addFieldToTab(
+        $fields->addFieldsToTab(
             'Root.Quote',
-            TextField::create('Quote', 'Quote')
+            [
+                CheckboxField::create('TypeModeForQuote', 'Type it out'),
+                TextField::create('Quote', 'Quote'),
+            ]
         );
 
         $fields->addFieldToTab(
