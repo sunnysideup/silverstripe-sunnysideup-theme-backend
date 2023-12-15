@@ -1,31 +1,52 @@
 {
-    "name": "sunnysideup/sunnysideup-theme-backend",
-    "type": "silverstripe-vendormodule",
-    "description": "Supporting module for the Sunny Side Up Theme.",
-    "keywords": [
-      "Silverstripe-CMS",
-      "CMS",
-      "Silverstripe",
-      "Sunny Side Up",
-      "Theme"
-    ],
-    "require": {
-      "silverstripe/framework": "^4.0",
-      "sminnee/silverstripe-verbosefields": "dev-master"
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "license": "BSD-3-Clause",
-    "authors": [
-      {
-        "name": "Nicolaas Francken",
-        "email": "modules@sunnysideup.co.nz",
-        "role": "lead developer"
-      }
-    ],
-    "autoload": {
-      "psr-4": {
-        "Sunnysideup\\SunnysideupThemeBackend\\": "src/"
-      }
+  "name": "sunnysideup/sunnysideup-theme-backend",
+  "type": "silverstripe-vendormodule",
+  "description": "Supporting module for the Sunny Side Up Theme.",
+  "keywords": [
+    "Silverstripe-CMS",
+    "CMS",
+    "Silverstripe",
+    "Sunny Side Up",
+    "Theme"
+  ],
+  "require": {
+      "php": ">=8.1",
+      "silverstripe/cms": "^4.0 || ^5.0",
+      "silverstripe/userforms": "^5.0 || ^6.0",
+      "sunnysideup/googleanalyticsbasics": "dev-master",
+      "sunnysideup/metatags": "dev-master",
+      "sunnysideup/webpack_requirements_backend": "dev-master",
+      "sunnysideup/simple-template-caching": "dev-master",
+      "sunnysideup/sunnysideup-theme": "dev-master",
+      "sunnysideup/phone_field": "dev-master",
+      "sunnysideup/email_address_database_field": "dev-master",
+      "sunnysideup/silverstripe-verbosefields": "dev-master"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require-dev": {
+      "sunnysideup/templateoverview": "dev-master",
+      "sunnysideup/prettyphoto": "dev-master",
+      "sunnysideup/typography": "dev-master",
+      "sunnysideup/sswebpack_engine_only": "dev-master",
+      "sunnysideup/config_manager": "dev-master"
+  },
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "Nicolaas Francken",
+      "email": "modules@sunnysideup.co.nz",
+      "role": "lead developer"
     }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Sunnysideup\\SunnysideupThemeBackend\\": "src/"
+    }
+  },
+  "extra": {
+    "expose": [
+      "images"
+    ]
+  }
 }

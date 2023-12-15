@@ -1,9 +1,24 @@
 ---
-Name: sunnysideup-theme-backend
+Name: sunnysideup-theme-backend-extensions
 ---
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - Sunnysideup\SunnysideupThemeBackend\Extensions\SiteConfigExtras
 
+Page:
+  extensions:
+    - Sunnysideup\SunnysideupThemeBackend\Extensions\PageExtension
+
+PageController:
+  extensions:
+    - Sunnysideup\SunnysideupThemeBackend\Extensions\PageControllerExtension
+
+---
+Name: sunnysideup-theme-backend-cache
+---
 SilverStripe\Core\Injector\Injector:
   Psr\SimpleCache\CacheInterface.randomImageCache:
     factory: SilverStripe\Core\Cache\CacheFactory
     constructor:
-      namespace: "randomImageCache"
+      namespace: 'randomImageCache'
+      defaultLifeTime: 864000 # 10 days!
