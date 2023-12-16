@@ -14,7 +14,6 @@ use SilverStripe\Core\Injector\Injector;
 
 class PageControllerExtension extends Extension
 {
-
     protected static $_random_images_assigned_to_pages = null;
 
     public function IsHomePage()
@@ -31,6 +30,15 @@ class PageControllerExtension extends Extension
         }
     }
 
+
+    public function HasQuote()
+    {
+        if($this->owner->isHomePage()) {
+            return true;
+        }
+        return trim($this->owner->Quote) !== '';
+    }
+
     public function MenuChildren()
     {
         return $this->owner->Children()->filter('ShowInMenus', 1);
@@ -38,34 +46,33 @@ class PageControllerExtension extends Extension
 
 
 
-    public function RandomImage() : string
+    public function RandomImage(): string
     {
         $imageName = '';
         if($this->owner->RandomImage && in_array($this->owner->RandomImage, $this->owner->getRandomImages(), true)) {
             $imageName = $this->owner->RandomImage;
-        }
-        else {
+        } else {
             $array = $this->owner->getRandomImagesAssignedToPages();
             if (isset($_GET['testimg'])) {
                 $pos = intval($_GET['testimg']);
             } else {
                 $pos = $this->owner->ID;
             }
-            if(! isset($array[$pos]) && !empty($array)) {
+            if(!isset($array[$pos]) && !empty($array)) {
                 $pos = array_rand($array);
             }
-            if( isset($array[$pos])) {
+            if(isset($array[$pos])) {
                 $imageName = $array[$pos];
             }
         }
         if($imageName) {
-            return Controller::join_links($this->owner->getRandomImagesFrontEndFolder() , $imageName);
+            return Controller::join_links($this->owner->getRandomImagesFrontEndFolder(), $imageName);
         } else {
             return '';
         }
     }
 
-    public function getRandomImagesAssignedToPages() : array
+    public function getRandomImagesAssignedToPages(): array
     {
         if (self::$_random_images_assigned_to_pages === null) {
             $files = $this->owner->getRequest()->getSession()->get('randomImages');
@@ -96,7 +103,7 @@ class PageControllerExtension extends Extension
 
     public function onAfterInit()
     {
-        if (! empty($_POST['Website'])) {
+        if (!empty($_POST['Website'])) {
             die('Sorry, but this looks like spam. Please go back the previous page and try again.');
         }
         if($this->owner->getRequest()->getVar('flush')) {
@@ -107,7 +114,7 @@ class PageControllerExtension extends Extension
     }
 
 
-    public function addSiteTreeIdsToFiles(array $files) : array
+    public function addSiteTreeIdsToFiles(array $files): array
     {
         $newArray = [];
         if(count($files)) {
@@ -126,7 +133,7 @@ class PageControllerExtension extends Extension
         return $newArray;
     }
 
-    public function getRandomImages() :array
+    public function getRandomImages(): array
     {
         if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImages')) {
             return $this->owner->dataRecord->getRandomImages();
@@ -134,7 +141,7 @@ class PageControllerExtension extends Extension
         return [];
     }
 
-    public function getRandomImagesFrontEndFolder() :string
+    public function getRandomImagesFrontEndFolder(): string
     {
         if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImagesFrontEndFolder')) {
             return $this->owner->dataRecord->getRandomImagesFrontEndFolder();

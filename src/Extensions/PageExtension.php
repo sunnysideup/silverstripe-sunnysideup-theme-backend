@@ -39,6 +39,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
         'ShadowOverLogo' => 'Enum("none,light,dark", "none")',
         'TitleColour' => 'Enum("natural,yellow,blue", "natural")',
         'IntroPhotoCredit' => 'Varchar',
+        'IntroVideoCredit' => 'Varchar',
     ];
 
     public function updateCMSFields(FieldList $fields)
@@ -53,8 +54,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
                     ->setEmptyString('--- no specific theme ---'),
                 DropdownField::create('ShadowOverLogo', 'Shadow over logo', $this->getOwner()->dbObject('ShadowOverLogo')->enumValues()),
                 DropdownField::create('TitleColour', 'Title Colour', $this->getOwner()->dbObject('TitleColour')->enumValues()),
-                TextField::create('IntroPhotoCredit', 'Intro Photo credit'),
-            ]
+                ]
         );
 
         $fields->addFieldsToTab(
@@ -65,18 +65,25 @@ class PageExtension extends SiteTreeExtension implements Flushable
             ]
         );
 
-        $fields->addFieldToTab(
+        $fields->addFieldsToTab(
             'Root.Video',
-            TextField::create('VimeoVideoID', 'Vimeo Video ID')
+            [
+                TextField::create('IntroVideoCredit', 'Intro Video credit'),
+                TextField::create('VimeoVideoID', 'Vimeo Video ID'),
+            ]
         );
 
-        $fields->addFieldToTab(
+        $fields->addFieldsToTab(
             'Root.RandomImage',
-            $this->getSelectRandomImageField()
+            [
+                TextField::create('IntroPhotoCredit', 'Intro Photo credit'),
+                $this->getSelectRandomImageField()
+            ]
         );
 
         return $fields;
     }
+
 
     protected function getSelectRandomImageField(): VerboseOptionsetField
     {
