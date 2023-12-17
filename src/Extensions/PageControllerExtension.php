@@ -31,12 +31,22 @@ class PageControllerExtension extends Extension
     }
 
 
-    public function HasQuote()
+    public function HasQuote(): bool
     {
-        if($this->owner->isHomePage()) {
+        if($this->owner->IsHomePage()) {
             return true;
         }
-        return trim($this->owner->Quote) !== '';
+        return trim((string) $this->owner->Quote) !== '';
+    }
+
+    public function HasRocketShow(): bool
+    {
+        return $this->owner->NoRocketShow ? false : true;
+    }
+
+    public function HasVideo(): bool
+    {
+        return $this->owner->VimeoVideoID && $this->HasRocketShow();
     }
 
     public function MenuChildren()
