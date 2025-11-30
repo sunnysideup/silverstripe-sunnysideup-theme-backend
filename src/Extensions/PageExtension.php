@@ -16,6 +16,7 @@ use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Flushable;
 use SilverStripe\Control\Director;
 use SilverStripe\Control\Controller;
+use SilverStripe\Forms\NumericField;
 use Sunnysideup\VerboseFields\VerboseOptionsetField;
 
 class PageExtension extends SiteTreeExtension implements Flushable
@@ -38,6 +39,8 @@ class PageExtension extends SiteTreeExtension implements Flushable
         'DefaultTheme' => 'Enum("sun,moon,rocket", "sun")',
         'ShadowOverLogo' => 'Enum("none,light,dark", "none")',
         'TitleColour' => 'Enum("natural,yellow,blue", "natural")',
+        'RandomImageX' => 'Percentage',
+        'RandomImageY' => 'Percentage',
         'IntroPhotoCredit' => 'Varchar',
         'IntroVideoCredit' => 'Varchar',
     ];
@@ -54,7 +57,13 @@ class PageExtension extends SiteTreeExtension implements Flushable
                     ->setEmptyString('--- no specific theme ---'),
                 DropdownField::create('ShadowOverLogo', 'Shadow over logo', $this->getOwner()->dbObject('ShadowOverLogo')->enumValues()),
                 DropdownField::create('TitleColour', 'Title Colour', $this->getOwner()->dbObject('TitleColour')->enumValues()),
-                ]
+                NumericField::create('RandomImageX', 'Random Image X Position (%)')
+                    ->setScale(2)
+                    ->setDescription('0 is left, 1 is right'),
+                NumericField::create('RandomImageY', 'Random Image Y Position (%)')
+                    ->setScale(2)
+                    ->setDescription('0 is top, 1 is bottom'),
+            ]
         );
 
         $fields->addFieldsToTab(
@@ -91,7 +100,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
         $descriptions = [];
         $list = $this->getRandomImages();
         $source = array_combine($list, $list);
-        foreach($list as $image) {
+        foreach ($list as $image) {
             $descriptions[$image] = '<img src="' . $this->getRandomImagesFrontEndFolder() . '/' . $image . '" />';
         }
 
@@ -140,5 +149,4 @@ class PageExtension extends SiteTreeExtension implements Flushable
     {
         return Config::inst()->get(PageExtension::class, 'image_dir');
     }
-
 }
