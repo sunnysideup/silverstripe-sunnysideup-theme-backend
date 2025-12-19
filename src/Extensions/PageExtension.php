@@ -124,7 +124,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
                 $files = scandir($this->getRandomImagesFolderAbsolute()) ?? [];
                 foreach ($files as $key => $file) {
                     $ext = pathinfo($file, PATHINFO_EXTENSION);
-                    if ($ext !== 'jpg') {
+                    if (! in_array($ext, ['jpg', 'webp'], true)) {
                         unset($files[$key]);
                     }
                 }
