@@ -13,23 +13,23 @@
     "php": ">=8.1",
     "silverstripe/cms": "^4.0 || ^5.0",
     "silverstripe/userforms": "^5.0 || ^6.0",
-    "sunnysideup/googleanalyticsbasics": "5.x-dev",
-    "sunnysideup/metatags": "5.x-dev",
-    "sunnysideup/webpack_requirements_backend": "5.x-dev",
-    "sunnysideup/simple-template-caching": "5.x-dev",
-    "sunnysideup/sunnysideup-theme": "5.x-dev",
-    "sunnysideup/phone_field": "5.x-dev",
-    "sunnysideup/email_address_database_field": "5.x-dev",
-    "sunnysideup/silverstripe-verbosefields": "5.x-dev"
+    "sunnysideup/googleanalyticsbasics": "^5.0-dev",
+    "sunnysideup/metatags": "^5.0-dev",
+    "sunnysideup/webpack_requirements_backend": "^5.0-dev",
+    "sunnysideup/simple-template-caching": "^5.0-dev",
+    "sunnysideup/sunnysideup-theme": "^5.0-dev",
+    "sunnysideup/phone_field": "^5.0-dev",
+    "sunnysideup/email_address_database_field": "^5.0-dev",
+    "sunnysideup/silverstripe-verbosefields": "^5.0-dev"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require-dev": {
-    "sunnysideup/templateoverview": "5.x-dev",
-    "sunnysideup/prettyphoto": "5.x-dev",
-    "sunnysideup/typography": "5.x-dev",
-    "sunnysideup/sswebpack_engine_only": "5.x-dev",
-    "sunnysideup/config_manager": "5.x-dev"
+    "sunnysideup/templateoverview": "^5.0-dev",
+    "sunnysideup/prettyphoto": "^5.0-dev",
+    "sunnysideup/typography": "^5.0-dev",
+    "sunnysideup/sswebpack_engine_only": "^5.0-dev",
+    "sunnysideup/config_manager": "^5.0-dev"
   },
   "license": "BSD-3-Clause",
   "authors": [
