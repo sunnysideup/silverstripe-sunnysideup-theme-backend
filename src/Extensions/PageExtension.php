@@ -7,7 +7,16 @@ use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\CheckboxField;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\TextField;
-use SilverStripe\CMS\Model\SiteTreeExtension;
+
+/**
+  * ### @@@@ START REPLACEMENT @@@@ ###
+  * WHY: automated upgrade
+  * OLD: SilverStripe\CMS\Model\SiteTreeExtension
+  * NEW: SilverStripe\Core\Extension ...  (COMPLEX)
+  * EXP: Removed deprecated class SilverStripe\\CMS\\Model\\SiteTreeExtension - subclass SilverStripe\\Core\\Extension instead. See: https://docs.silverstripe.org/en/6/changelogs/6.0.0/
+  * ### @@@@ STOP REPLACEMENT @@@@ ###
+  */
+use SilverStripe\Core\Extension;
 
 use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\Injector\Injector;
