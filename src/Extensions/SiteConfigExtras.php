@@ -8,16 +8,6 @@ use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TreeDropdownField;
-
-/**
-  * ### @@@@ START REPLACEMENT @@@@ ###
-  * WHY: automated upgrade
-  * OLD: SilverStripe\ORM\DataExtension
-  * NEW: SilverStripe\Core\Extension ...  (COMPLEX)
-  * EXP: Removed deprecated class SilverStripe\\ORM\\DataExtension - subclass SilverStripe\\Core\\Extension instead. See: https://docs.silverstripe.org/en/6/changelogs/6.0.0/
-  * ### @@@@ STOP REPLACEMENT @@@@ ###
-  */
-use SilverStripe\Core\Extension;
 use SilverStripe\ORM\DB;
 use SilverStripe\SiteConfig\SiteConfig;
 
@@ -69,7 +59,8 @@ class SiteConfigExtras extends DataExtension
             $siteConfig->CopyrightNotice =  date('Y') . ' ' . $siteConfig->Title;
             $update[] = 'created default entry for CopyrightNotice';
         }
-        if (count($update)) {
+
+        if ($update !== []) {
             $siteConfig->write();
             DB::alteration_message($siteConfig->ClassName . ' created/updated: ' . implode(' --- ', $update), 'created');
         }

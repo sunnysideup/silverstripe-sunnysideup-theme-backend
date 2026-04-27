@@ -5,18 +5,7 @@ namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\TextField;
-
-/**
-  * ### @@@@ START REPLACEMENT @@@@ ###
-  * WHY: automated upgrade
-  * OLD: SilverStripe\CMS\Model\SiteTreeExtension
-  * NEW: SilverStripe\Core\Extension ...  (COMPLEX)
-  * EXP: Removed deprecated class SilverStripe\\CMS\\Model\\SiteTreeExtension - subclass SilverStripe\\Core\\Extension instead. See: https://docs.silverstripe.org/en/6/changelogs/6.0.0/
-  * ### @@@@ STOP REPLACEMENT @@@@ ###
-  */
-use SilverStripe\Core\Extension;
 
 use Psr\SimpleCache\CacheInterface;
 use SilverStripe\Core\Injector\Injector;
@@ -127,6 +116,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
             if ($files) {
                 $files = explode(',', $files);
             }
+
             if (is_array($files) && count($files)) {
                 //do nothing
             } else {
@@ -137,10 +127,13 @@ class PageExtension extends SiteTreeExtension implements Flushable
                         unset($files[$key]);
                     }
                 }
+
                 $cache->set('images', implode(',', $files));
             }
+
             self::$_random_images = $files;
         }
+
         return self::$_random_images;
     }
 
