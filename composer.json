@@ -11,16 +11,9 @@
   ],
   "require": {
     "php": ">=8.1",
-    "silverstripe/cms": "^4.0 || ^5.0",
-    "silverstripe/userforms": "^5.0 || ^6.0",
-    "sunnysideup/googleanalyticsbasics": "^5.0-dev",
-    "sunnysideup/metatags": "^5.0-dev",
-    "sunnysideup/webpack_requirements_backend": "^5.0-dev",
-    "sunnysideup/simple-template-caching": "^5.0-dev",
-    "sunnysideup/sunnysideup-theme": "^5.0-dev",
-    "sunnysideup/phone_field": "^5.0-dev",
-    "sunnysideup/email_address_database_field": "^5.0-dev",
-    "sunnysideup/silverstripe-verbosefields": "^5.0-dev"
+    "silverstripe/cms": "^6.0",
+    "silverstripe/userforms": "^7.0",
+    "sunnysideup/email_address_database_field": "^6.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -48,5 +41,42 @@
     "expose": [
       "images"
     ]
+  },
+  "yet-to-update": {
+    "sunnysideup/googleanalyticsbasics": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/metatags": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/webpack_requirements_backend": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/simple-template-caching": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/sunnysideup-theme": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/phone_field": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    },
+    "sunnysideup/silverstripe-verbosefields": {
+      "section": "require",
+      "current": "^5.0-dev",
+      "reason": "no-compatible-stable-release"
+    }
   }
 }
