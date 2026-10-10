@@ -2,21 +2,22 @@
 
 namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
-use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\DropdownField;
-use SilverStripe\Forms\CheckboxField;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Forms\TextField;
-use SilverStripe\CMS\Model\SiteTreeExtension;
-
+use Override;
 use Psr\SimpleCache\CacheInterface;
-use SilverStripe\Core\Injector\Injector;
-use SilverStripe\Core\Manifest\ResourceURLGenerator;
+use SilverStripe\CMS\Model\SiteTree;
+use SilverStripe\CMS\Model\SiteTreeExtension;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Core\Flushable;
-use SilverStripe\Control\Director;
-use SilverStripe\Control\Controller;
+use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Manifest\ResourceURLGenerator;
+use SilverStripe\Forms\CheckboxField;
+use SilverStripe\Forms\DropdownField;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\NumericField;
+use SilverStripe\Forms\TextField;
+use SilverStripe\ORM\DB;
 use Sunnysideup\VerboseFields\VerboseOptionsetField;
 
 class PageExtension extends SiteTreeExtension implements Flushable
@@ -37,12 +38,13 @@ class PageExtension extends SiteTreeExtension implements Flushable
         'VimeoVideoID' => 'Int',
         'RandomImage' => 'Varchar(255)',
         'DefaultTheme' => 'Enum("sun,moon,rocket", "sun")',
-        'ShadowOverLogo' => 'Enum("none,light,dark", "none")',
+        'ShadowOverLogo' => 'Enum("none,light,dark,fullblue,fullyellow,fullpurple,fullgreen", "none")',
         'TitleColour' => 'Enum("natural,yellow,blue", "natural")',
         'RandomImageX' => 'Percentage',
         'RandomImageY' => 'Percentage',
         'IntroPhotoCredit' => 'Varchar',
         'IntroVideoCredit' => 'Varchar',
+        'SplashBackgroundColourLevel' => 'Int',
     ];
 
     public function updateCMSFields(FieldList $fields)
@@ -92,6 +94,39 @@ class PageExtension extends SiteTreeExtension implements Flushable
 
         return $fields;
     }
+
+    #[Override]
+    public function onBeforeWrite()
+    {
+        $owner = $this->getOwner();
+        $owner->SplashBackgroundColourLevel = $this->getLevel();
+    }
+
+    public function getCalculatedLevel()
+    {
+        $owner = $this->getOwner();
+        if ($owner->SplashBackgroundColourLevel) {
+            return $owner->SplashBackgroundColourLevel;
+        }
+        $level = $this->getLevel();
+
+        DB::query("Update Page set SplashBackgroundColourLevel = $level where ID = " . $owner->ID);
+        DB::query("Update Page_Live set SplashBackgroundColourLevel = $level where ID = " . $owner->ID);
+        return $level;
+    }
+
+    protected function getLevel()
+    {
+        $owner = $this->getOwner();
+        $parent = $owner->Parent();
+        $x = 1;
+        while ($parent && $parent->exists()) {
+            $x++;
+            $parent = $parent->Parent();
+        }
+        return $x;
+    }
+
 
 
     protected function getSelectRandomImageField(): VerboseOptionsetField

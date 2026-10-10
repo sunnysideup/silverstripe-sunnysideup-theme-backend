@@ -4,13 +4,13 @@ namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
 use SilverStripe\CMS\Controllers\ContentController;
 use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\Control\Director;
 use SilverStripe\Control\Controller;
-use SilverStripe\UserForms\Model\UserDefinedForm;
-use SilverStripe\Core\Extension;
+use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
-use SilverStripe\Core\Manifest\ResourceURLGenerator;
+use SilverStripe\Core\Extension;
 use SilverStripe\Core\Injector\Injector;
+use SilverStripe\Core\Manifest\ResourceURLGenerator;
+use SilverStripe\UserForms\Model\UserDefinedForm;
 
 class PageControllerExtension extends Extension
 {
@@ -33,7 +33,7 @@ class PageControllerExtension extends Extension
 
     public function HasQuote(): bool
     {
-        if($this->owner->IsHomePage()) {
+        if ($this->owner->IsHomePage()) {
             return true;
         }
         return trim((string) $this->owner->Quote) !== '';
@@ -59,7 +59,7 @@ class PageControllerExtension extends Extension
     public function RandomImage(): string
     {
         $imageName = '';
-        if($this->owner->RandomImage && in_array($this->owner->RandomImage, $this->owner->getRandomImages(), true)) {
+        if ($this->owner->RandomImage && in_array($this->owner->RandomImage, $this->owner->getRandomImages(), true)) {
             $imageName = $this->owner->RandomImage;
         } else {
             $array = $this->owner->getRandomImagesAssignedToPages();
@@ -68,14 +68,14 @@ class PageControllerExtension extends Extension
             } else {
                 $pos = $this->owner->ID;
             }
-            if(!isset($array[$pos]) && !empty($array)) {
+            if (!isset($array[$pos]) && !empty($array)) {
                 $pos = array_rand($array);
             }
-            if(isset($array[$pos])) {
+            if (isset($array[$pos])) {
                 $imageName = $array[$pos];
             }
         }
-        if($imageName) {
+        if ($imageName) {
             return Controller::join_links($this->owner->getRandomImagesFrontEndFolder(), $imageName);
         } else {
             return '';
@@ -116,7 +116,7 @@ class PageControllerExtension extends Extension
         if (!empty($_POST['Website'])) {
             die('Sorry, but this looks like spam. Please go back the previous page and try again.');
         }
-        if($this->owner->getRequest()->getVar('flush')) {
+        if ($this->owner->getRequest()->getVar('flush')) {
             $this->owner->getRequest()->getSession()->clear('randomImages');
         }
         // $this->owner->addBasicMetatagRequirements();
@@ -127,12 +127,12 @@ class PageControllerExtension extends Extension
     public function addSiteTreeIdsToFiles(array $files): array
     {
         $newArray = [];
-        if(count($files)) {
+        if (count($files)) {
             $originalFiles = $files;
             $pageIds = SiteTree::get()->column('ID');
-            if(count($pageIds)) {
-                foreach($pageIds as $id) {
-                    if(empty($files)) {
+            if (count($pageIds)) {
+                foreach ($pageIds as $id) {
+                    if (empty($files)) {
                         $files = $originalFiles;
                     }
                     $file = array_pop($files);
@@ -145,7 +145,7 @@ class PageControllerExtension extends Extension
 
     public function getRandomImages(): array
     {
-        if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImages')) {
+        if ($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImages')) {
             return $this->owner->dataRecord->getRandomImages();
         }
         return [];
@@ -153,9 +153,14 @@ class PageControllerExtension extends Extension
 
     public function getRandomImagesFrontEndFolder(): string
     {
-        if($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImagesFrontEndFolder')) {
+        if ($this->owner && $this->owner->dataRecord && $this->owner->dataRecord->hasMethod('getRandomImagesFrontEndFolder')) {
             return $this->owner->dataRecord->getRandomImagesFrontEndFolder();
         }
         return '';
+    }
+
+    public function SplashBackgroundColour(): string
+    {
+        return '#f7cd55';
     }
 }
