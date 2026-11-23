@@ -2,13 +2,13 @@
 
 namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
+use SilverStripe\Core\Extension;
 use Page;
 use SilverStripe\CMS\Model\SiteTree;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\TreeDropdownField;
-use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\DB;
 use SilverStripe\SiteConfig\SiteConfig;
 
@@ -18,7 +18,7 @@ use SilverStripe\SiteConfig\SiteConfig;
  *
  **/
 
-class SiteConfigExtras extends DataExtension
+class SiteConfigExtras extends Extension
 {
     private static $db = [
         'CopyrightNotice' => 'Varchar',
@@ -48,7 +48,6 @@ class SiteConfigExtras extends DataExtension
 
     public function onBeforeWrite()
     {
-        parent::onBeforeWrite();
     }
 
     public function requireDefaultRecords()
@@ -60,6 +59,7 @@ class SiteConfigExtras extends DataExtension
             $siteConfig->CopyrightNotice =  date('Y') . ' ' . $siteConfig->Title;
             $update[] = 'created default entry for CopyrightNotice';
         }
+
         if (count($update)) {
             $siteConfig->write();
             DB::alteration_message($siteConfig->ClassName . ' created/updated: ' . implode(' --- ', $update), 'created');

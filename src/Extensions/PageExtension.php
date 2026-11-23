@@ -2,10 +2,9 @@
 
 namespace Sunnysideup\SunnysideupThemeBackend\Extensions;
 
+use SilverStripe\Core\Extension;
 use Override;
 use Psr\SimpleCache\CacheInterface;
-use SilverStripe\CMS\Model\SiteTree;
-use SilverStripe\CMS\Model\SiteTreeExtension;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
 use SilverStripe\Core\Config\Config;
@@ -20,7 +19,7 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DB;
 use Sunnysideup\VerboseFields\VerboseOptionsetField;
 
-class PageExtension extends SiteTreeExtension implements Flushable
+class PageExtension extends Extension implements Flushable
 {
     public static function flush()
     {
@@ -49,7 +48,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
 
     public function updateCMSFields(FieldList $fields)
     {
-        $owner = $this->owner;
+        $owner = $this->getOwner();
 
         $fields->addFieldsToTab(
             'Root.Theme',
@@ -108,6 +107,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
         if ($owner->SplashBackgroundColourLevel) {
             return $owner->SplashBackgroundColourLevel;
         }
+
         $level = $this->getLevel();
 
         DB::query("Update Page set SplashBackgroundColourLevel = $level where ID = " . $owner->ID);
@@ -124,6 +124,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
             $x++;
             $parent = $parent->Parent();
         }
+
         return $x;
     }
 
@@ -139,8 +140,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
             $descriptions[$image] = '<img src="' . $this->getRandomImagesFrontEndFolder() . '/' . $image . '" />';
         }
 
-        return (new VerboseOptionsetField('RandomImage', 'Random Image (optional)'))
-            ->setSource($source)
+        return VerboseOptionsetField::create('RandomImage', 'Random Image (optional)')->setSource($source)
             ->setSourceDescriptions($descriptions);
     }
 
@@ -153,6 +153,7 @@ class PageExtension extends SiteTreeExtension implements Flushable
             if ($files) {
                 $files = explode(',', $files);
             }
+
             if (is_array($files) && count($files)) {
                 //do nothing
             } else {
@@ -163,10 +164,13 @@ class PageExtension extends SiteTreeExtension implements Flushable
                         unset($files[$key]);
                     }
                 }
+
                 $cache->set('images', implode(',', $files));
             }
+
             self::$_random_images = $files;
         }
+
         return self::$_random_images;
     }
 
