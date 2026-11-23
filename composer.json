@@ -10,7 +10,7 @@
         "Theme"
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "silverstripe/cms": "^6.0",
         "silverstripe/userforms": "^7.0",
         "sunnysideup/googleanalyticsbasics": "dev-main",

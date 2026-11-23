@@ -86,7 +86,7 @@ class PageControllerExtension extends Extension
         if (self::$_random_images_assigned_to_pages === null) {
             $files = $this->getOwner()->getRequest()->getSession()->get('randomImages');
             if ($files) {
-                $files = unserialize($files);
+                $files = unserialize($files, ["allowed_classes" => false]);
             }
 
             if (is_array($files) && count($files)) {
