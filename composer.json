@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": ">=8.1",
-        "silverstripe/cms": "^4.0 || ^5.0",
-        "silverstripe/userforms": "^5.0 || ^6.0",
+        "silverstripe/cms": "^6.0",
+        "silverstripe/userforms": "^7.0",
         "sunnysideup/googleanalyticsbasics": "dev-main",
         "sunnysideup/metatags": "dev-main",
         "sunnysideup/webpack_requirements_backend": "dev-main",
