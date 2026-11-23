@@ -50,7 +50,7 @@ class SiteConfigExtras extends Extension
     {
     }
 
-    public function requireDefaultRecords()
+    public function onRequireDefaultRecords()
     {
         $update = [];
         $siteConfig = SiteConfig::current_site_config();

@@ -77,6 +77,7 @@ class PageControllerExtension extends Extension
         if ($imageName) {
             return Controller::join_links($this->getOwner()->getRandomImagesFrontEndFolder(), $imageName);
         }
+
         return '';
     }
 
