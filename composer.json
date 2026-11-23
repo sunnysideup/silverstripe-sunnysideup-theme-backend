@@ -12,24 +12,11 @@
     "require": {
         "php": ">=8.3",
         "silverstripe/cms": "^6.0",
-        "silverstripe/userforms": "^7.0",
-        "sunnysideup/googleanalyticsbasics": "dev-main",
-        "sunnysideup/metatags": "dev-main",
-        "sunnysideup/webpack_requirements_backend": "dev-main",
-        "sunnysideup/simple-template-caching": "dev-main",
-        "sunnysideup/sunnysideup-theme": "dev-main",
-        "sunnysideup/phone_field": "dev-main",
-        "sunnysideup/email_address_database_field": "dev-main",
         "sunnysideup/silverstripe-verbosefields": "dev-main"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "sunnysideup/templateoverview": "dev-main",
-        "sunnysideup/prettyphoto": "dev-main",
-        "sunnysideup/typography": "dev-main",
-        "sunnysideup/sswebpack_engine_only": "dev-main",
-        "sunnysideup/config_manager": "dev-main"
     },
     "license": "BSD-3-Clause",
     "authors": [
