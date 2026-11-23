@@ -94,7 +94,6 @@ class PageExtension extends Extension implements Flushable
         return $fields;
     }
 
-    #[Override]
     public function onBeforeWrite()
     {
         $owner = $this->getOwner();
